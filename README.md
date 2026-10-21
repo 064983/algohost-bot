@@ -79,13 +79,25 @@ The project is published at `https://github.com/064983/algohost-bot`. To work on
 
 You can also clone from the VS Code Source Control view using **Clone Repository**, paste `https://github.com/064983/algohost-bot.git`, and sign into GitHub when VS Code requests it. Never copy `.env.local` or publish real payment or database credentials. Content and WhatsApp defaults are in `lib/config.ts`; products and prices are managed in `/admin` after database setup.
 
-## Deploy
+## Deploy to Render
 
-1. Push the code to GitHub as above.
-2. Create a Vercel project and import the `064983/algohost-bot` repository.
-3. Add the same Supabase variables and the **live** Paystack secret only in Vercel's protected Environment Variables settings. Add `NEXT_PUBLIC_SITE_URL=https://your-domain`.
-4. Deploy, add the production domain to Supabase's allowed redirect URLs, and set the production webhook URL in Paystack.
-5. Test the full flow on the deployed site in provider test mode before using live payments.
+1. Push the project to the `main` branch of the GitHub repository.
+2. Sign in to Render and choose **New > Blueprint**. Connect GitHub if prompted, select `064983/algohost-bot`, and deploy the `render.yaml` blueprint.
+3. Render creates a Node.js web service using `npm ci && npm run build` and `npm start`. Choose a plan that suits you. Free web services can sleep while idle; use an always-on plan before accepting payments so buyers and payment notifications are not delayed by cold starts.
+4. In the Render service's **Environment** settings, add these required values. Copy the Supabase URL and anon key from **Supabase > Project Settings > API**, and keep the service-role key and Paystack secret private:
+
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY` — server secret; never expose it to browsers
+   - `PAYSTACK_SECRET_KEY` — server secret; begin with the provider's test key
+   - `NEXT_PUBLIC_SITE_URL` — the complete HTTPS Render service URL, for example `https://algohost-bot.onrender.com`
+
+   Do not commit or paste secret values into `render.yaml`, GitHub, or a `NEXT_PUBLIC_` variable.
+5. Save the environment variables and trigger a deploy from Render. After the service is live, copy its exact HTTPS URL into `NEXT_PUBLIC_SITE_URL` and save/redeploy if necessary.
+6. In Supabase **Authentication > URL Configuration**, allow the production URL for sign-in redirects. Set the Paystack webhook to `https://YOUR-RENDER-DOMAIN/api/paystack/webhook`.
+7. Test sign-in, checkout, successful and failed payments, webhook verification, and private ID access using provider test mode. Do not enable live payments until a valid ID has been tested with the actual bot and you have completed the privacy and refund policies.
+
+The Render Blueprint intentionally prompts you to enter environment values in the service settings; it does not put credentials in source control.
 
 ## Useful checks
 
