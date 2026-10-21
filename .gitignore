@@ -1,0 +1,9 @@
+node_modules
+.next
+.vercel
+*.tsbuildinfo
+.env*
+!.env.example
+out
+coverage
+npm-debug.log*
