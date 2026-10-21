@@ -2,6 +2,7 @@ services:
   - type: web
     name: algohost-bot
     runtime: node
+    plan: free
     branch: main
     buildCommand: npm ci && npm run build
     startCommand: npm start

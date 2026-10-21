@@ -83,7 +83,7 @@ You can also clone from the VS Code Source Control view using **Clone Repository
 
 1. Push the project to the `main` branch of the GitHub repository.
 2. Sign in to Render and choose **New > Blueprint**. Connect GitHub if prompted, select `064983/algohost-bot`, and deploy the `render.yaml` blueprint.
-3. Render creates a Node.js web service using `npm ci && npm run build` and `npm start`. Choose a plan that suits you. Free web services can sleep while idle; use an always-on plan before accepting payments so buyers and payment notifications are not delayed by cold starts.
+3. Render creates a free Node.js web service using `npm ci && npm run build` and `npm start`. Free web services can sleep while idle; they are suitable for a preview, but can delay customer visits and payment notifications while waking. Use an always-on plan before accepting payments.
 4. In the Render service's **Environment** settings, add these required values. Copy the Supabase URL and anon key from **Supabase > Project Settings > API**, and keep the service-role key and Paystack secret private:
 
    - `NEXT_PUBLIC_SUPABASE_URL`
@@ -97,7 +97,7 @@ You can also clone from the VS Code Source Control view using **Clone Repository
 6. In Supabase **Authentication > URL Configuration**, allow the production URL for sign-in redirects. Set the Paystack webhook to `https://YOUR-RENDER-DOMAIN/api/paystack/webhook`.
 7. Test sign-in, checkout, successful and failed payments, webhook verification, and private ID access using provider test mode. Do not enable live payments until a valid ID has been tested with the actual bot and you have completed the privacy and refund policies.
 
-The Render Blueprint intentionally prompts you to enter environment values in the service settings; it does not put credentials in source control.
+The Render Blueprint explicitly selects the free service plan and prompts you to enter environment values in the service settings; it does not put credentials in source control.
 
 ## Useful checks
 
