@@ -1,9 +1,9 @@
 export const business = {
-  name: "Algohost Bot",
+  name: "saint_graphy",
   whatsappNumber: "27649838898",
   whatsappDisplay: "0649838898",
   whatsappMessage:
-    "Hello Algohost Bot, I am interested in purchasing a trading bot. Please help me choose a bot and explain the unlocking ID process.",
+    "Hello, I found your photography website and would love to chat about a photo session.",
 };
 
 export const whatsappUrl = (
